@@ -13,7 +13,7 @@ for i in range(size):
             if j==0:
                 array[0]=key
         else:
-            array[j + 1] = key
+            array[j + 1] = key 
             break
 
 print(array)
