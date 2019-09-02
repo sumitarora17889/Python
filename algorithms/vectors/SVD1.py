@@ -11,7 +11,8 @@ def diagonal(array, row, column):
         Diag.append(row)
     return Diag
 
-A=np.random.randint(1,4,size=[4,5])
+# A=np.random.randint(1,4,size=[4,5])
+A=np.matrix([[2,4],[1,3],[0,0],[0,0]])
 print("========A========\r\n")
 print(A)
 print("========A========\r\n")
@@ -50,7 +51,7 @@ print("========Descending Sorting Index reverse========\r\n")
 
 S=evalues[index[::-1]]
 
-U=evectors[index[::-1]].T
+U=evectors[index[::-1]]
 evalues,evectors=np.linalg.eig(ATA)
 
 index=np.argsort(evalues)
@@ -59,6 +60,15 @@ V=evectors[index[::-1]]
 
 
 print("========Eigens========\r\n")
+print("========Evalues========\r\n")
+
+print(evalues)
+
+print("========Evalues========\r\n")
+
+print("========evectors========\r\n")
+print(evectors)
+print("========evectors========\r\n")
 print("========U========\r\n")
 
 print(U)
@@ -72,7 +82,7 @@ print("========V========\r\n")
 
 print(V)
 print("========V========\r\n")
-SSVD=diagonal(S,4,5)
+SSVD=diagonal(S,4,2)
 print(np.matmul(np.matmul(U.T,SSVD),V))
 
 US,SS,VS=np.linalg.svd(A)
@@ -83,7 +93,7 @@ print("========U SVD Formula========\r\n")
 print(US)
 print("========U SVD Formula========\r\n")
 print("========Sigma SVD Formula========\r\n")
-SSVD=diagonal(SS,4,5)
+SSVD=diagonal(SS,4,2)
 print(SS)
 print("========Sigma SVD Formula========\r\n")
 print("========V SVD Formula========\r\n")
