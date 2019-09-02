@@ -1,7 +1,8 @@
 # import numpy
 import numpy as np
 
-A=np.random.randint(0,40,10);
+size=np.int(input("Enter Size of the array: "))
+A=np.random.randint(0,1000,size);
 
 print(A)
 
@@ -12,13 +13,13 @@ def exchange(A, i, j):
 
 def partition(A, start, end):
     x=A[end]
-    i=start-1
-    for j in range(start,end-1):
-        if A[j] < x:
+    i=start
+    for j in range(start,end):
+        if A[j] <= x:
+            exchange(A, i, j)
             i=i+1
-            # exchange(A,i,j)
-    exchange(A,i+1,end)
-    return i+1
+    exchange(A,i,end)
+    return i
 
 def quicksort(A, start, end):
     print("\r\nStart: "+str(start)+"\tEnd:"+str(end))
