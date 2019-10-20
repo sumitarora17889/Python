@@ -9,9 +9,6 @@ plt.scatter(X,Y)
 # plt.ylabel('y - axis')
 # plt.title('Regression X-Y')
 # plt.show()
-residue=[]
-slope=[]
-intercept=[]
 plt.scatter(X, Y)
 A = np.vstack([X, np.ones(len(X))]).T
 model = np.linalg.lstsq(A, Y, rcond=None)
