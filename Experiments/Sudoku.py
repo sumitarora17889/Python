@@ -34,12 +34,21 @@ def adjust(matrix, row, col, value):
         matrix[row - 1,:,value - 1] = False
         matrix[:,col - 1,value - 1] = False
         matrix[g1: g1 + 3,g2: g2 + 3,value - 1] = False
-        print(np.any(matrix[:][:]))
+        matrix[row - 1, col-1, :] = False
+        matrix[row - 1, col-1, value-1] = True
+    else:
+        return False
+    return True
 
 
+def solvesudoku(array):
+    for i in range(len(array)):
+        if adjust(matrix, array[i][0], array[i][1], array[i][2])==False:
+            return False
+    return True
 
+solvesudoku(array)
 
-
-print(matrix.shape)
-adjust(matrix, 1, 4, 6)
-print(matrix)
+for i in range(9):
+    for j in range(9):
+        print(np.arange(1,10)[matrix[i][j]])
