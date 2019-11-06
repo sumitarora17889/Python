@@ -22,4 +22,3 @@ for i in range(cycles):
     value = value + (coeff * math.pow(a3, pow))
 
 print(value)
-
