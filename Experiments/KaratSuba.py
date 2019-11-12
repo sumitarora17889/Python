@@ -13,17 +13,17 @@ num2=6756321
 #     return str(int(a)-int(b)-int(c))
 
 def multiply(num1,num2):
-    bitlength=max(num1.bit_length(),num2.bit_length())
-    if bitlength==0 or num1==0 or num2==0:
+    if num1==0 or num2==0:
         return 0
-    if bitlength==1:
-        return num1*num2
-    mid=bitlength>>1
+    mid = max(num1, num2).bit_length() >> 1
+    if mid==0:
+        return 0
+    if mid==2:
+        return num1&num2
     num11=num1>>mid
-    mask=(1<<mid)-1
-    num12=num1 & mask
+    num12=num1 & ((1<<mid)-1)
     num21=num2>>mid
-    num22=num2 & mask
+    num22=num2 & ((1<<mid)-1)
     firsts=multiply(num11,num21)
     firstsecond=multiply(num12,num22)
     answer=(firsts<<(mid<<1))+  ((multiply((num11+num12),(num21+num22))-firstsecond-firsts)<<mid)+     firstsecond
