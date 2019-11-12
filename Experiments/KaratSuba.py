@@ -26,8 +26,11 @@ def multiply(num1,num2):
     num22=num2 & ((1<<mid)-1)
     firsts=multiply(num11,num21)
     firstsecond=multiply(num12,num22)
-    answer=(firsts<<(mid<<1))+  ((multiply((num11+num12),(num21+num22))-firstsecond-firsts)<<mid)+     firstsecond
+    answer=(firsts<<(mid<<1))+  ((multiply((num11+num12),(num21+num22))-firstsecond-firsts)<<mid)+ firstsecond
     return answer
+
+def multiply1(num1,num2):
+    return num1*num2
 
 start = datetime.now()
 for i in range(5000):
@@ -37,7 +40,7 @@ print((a,end-start))
 
 start = datetime.now()
 for i in range(5000):
-    a=num1*num2
+    a=multiply1(num1,num2)
 end=datetime.now()
 print((a,end-start))
 
