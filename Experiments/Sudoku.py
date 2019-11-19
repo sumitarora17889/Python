@@ -2,15 +2,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
 
-array= [[1,3,8],[1,6,3],[1,7,4],[1,9,2],
-        [2,4,2],
-        [3,2,3],[3,4,1],[3,5,6],[3,8,5],
-        [4,2,1],[4,7,5],[4,8,6],[4,9,8],
-
-        [6,1,7],[6,2,8],[6,3,4],[6,8,9],
-        [7,2,4],[7,5,5],[7,6,1],[7,8,3],
-        [8,6,7],
-        [9,1,5],[9,3,3],[9,4,8],[9,7,9]
+color = np.zeros((9, 9),dtype=int)
+array= [[1,2,8],[1,5,7],[1,9,9],
+        [2,2,5],[2,5,2],[2,6,6],
+        [3,2,2],[3,6,8],[3,7,5],
+        [4,8,3],[4,9,7],
+        [5,1,9],[5,3,6],[5,7,4],[5,9,1],
+        [6,1,3],[6,2,1],
+        [7,3,1],[7,4,3],[7,8,9],
+        [8,4,1],[8,5,6],[8,8,8],
+        [9,1,5],[9,5,8],[9,8,6]
         ]
 # array = [[1, 4, 6], [1, 6, 4], [1, 7, 7], [2, 1, 7], [2, 3, 6], [2, 9, 9], [3, 6, 5], [3, 8, 8], [4, 2, 7], [4, 5, 2],
 #          [4, 8, 9], [4, 9, 3], [5, 1, 8], [5, 9, 5], [6, 1, 4], [6, 2, 3], [6, 5, 1], [6, 8, 7], [7, 2, 5], [7, 4, 2],
@@ -19,6 +20,7 @@ def creatematrix(arr):
     matrix=np.zeros((9,9), dtype=int)
     for a in arr:
         matrix[a[0] - 1][a[1] - 1] = a[2]
+        color[a[0] - 1][a[1] - 1]=1
     return matrix
 
 def newmat(matrix,a):
@@ -96,6 +98,8 @@ def adjust(grids, columns, rows, cells, a):
     adjustrow(rows, a)
     adjustcell(cells, a)
 
+
+
 def solvesudoku(matrix):
     grids = np.full((9, 9), set(np.arange(9)))
     rows = np.full((9, 9), set(np.arange(9)))
@@ -120,6 +124,7 @@ def solvesudoku(matrix):
                     if matrix[rowval][colval]==0:
                         matrix[rowval][colval] = value
                         adjust(grids, columns, rows, cells, (rowval+1,colval+1,value))
+                        counter=counter+1
                     elif matrix[rowval][colval]!=value:
                         return False
                 if len(rows[i][j])==0:
@@ -131,6 +136,7 @@ def solvesudoku(matrix):
                     if matrix[rowval][colval]==0:
                         matrix[rowval][colval] = value
                         adjust(grids, columns, rows, cells, (rowval + 1, colval + 1, value))
+                        counter = counter + 1
                     elif matrix[rowval][colval]!=value:
                         return False
                 if len(columns[i][j])==0:
@@ -142,6 +148,7 @@ def solvesudoku(matrix):
                     if matrix[rowval][colval]==0:
                         matrix[rowval][colval] = value
                         adjust(grids, columns, rows, cells, (rowval + 1, colval + 1, value))
+                        counter = counter + 1
                     elif matrix[rowval][colval]!=value:
                         return False
         for i in range(9):
@@ -154,6 +161,7 @@ def solvesudoku(matrix):
                     if matrix[i][j]==0:
                         matrix[i][j] = value
                         adjust(grids, columns, rows, cells, (i + 1, j + 1, value))
+                        counter = counter + 1
                     elif matrix[i][j]!=value:
                         return False
     for i in range(9):
@@ -161,8 +169,32 @@ def solvesudoku(matrix):
             if matrix[i][j]==0:
                 for val in cells[i][j]:
                      if type(solvesudoku(newmat(matrix,(i+1, j+1, val)))).__name__!='bool':
-                         return solvesudoku(newmat(matrix,(i+1, j+1, val)))
-    return matrix
+                         matrix= solvesudoku(newmat(matrix,(i+1, j+1, val)))
+                         break
+    return  matrix
+
+def printmatrix(matrix):
+    plt.close('all')
+    font1 = FontProperties()
+    fig = plt.figure()
+    ax = fig.gca()
+    plt.gca().invert_yaxis()
+    ax.set_xticks(np.arange(1, 10, 1), minor=True)
+    ax.set_yticks(np.arange(0, 10, 1), minor=True)
+    ax.set_xticks(np.arange(0, 10, 3), minor=False)
+    ax.set_yticks(np.arange(0, 10, 3), minor=False)
+    ax.grid(which='minor', linewidth=1)
+    ax.grid(which='major', linewidth=2)
+    ax.set_yticklabels([])
+    ax.set_xticklabels([])
+    for i in range(9):
+        for j in range(9):
+            if color[i][j]==1 :
+                font1.set_weight('bold')
+            else:
+                font1.set_weight('normal')
+            plt.text((j + 0.4), (i + 0.7), matrix[i][j], fontproperties=font1)
+    plt.show()
 
 
-print(solvesudoku(creatematrix(array)))
+printmatrix(solvesudoku(creatematrix(array)))
